@@ -1,13 +1,29 @@
 import express from "express";
-import { configDotenv } from "dotenv";
-import cors from "express";
-configDotenv();
+import { config as configDotenv } from "dotenv";
+import cors from "cors";
+configDotenv(); // Load environment variables from .env
+
+import connectToDB from "./db/db.js";
+connectToDB(); // Connect to the database
+
+import router from "./routes/user.routes.js";
 
 const app = express();
+
+// Enable CORS
 app.use(cors());
 
+// Middleware to parse JSON and URL-encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Root endpoint
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
+// User routes
+app.use("/users", router);
+
 export default app;
+
