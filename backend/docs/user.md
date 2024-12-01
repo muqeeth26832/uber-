@@ -63,3 +63,70 @@ Registers a new user in the system.
 ```
 
 ---
+
+### User Login
+
+Authenticates a user and returns a token.
+
+- **URL:** `/api/users/login`
+- **Method:** `POST`
+- **Content-Type:** `application/json`
+
+#### Request Body
+
+| Field    | Type   | Description          |
+| -------- | ------ | -------------------- |
+| email    | string | User's email address |
+| password | string | User's password      |
+
+#### Example Request
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "securepassword123"
+}
+```
+
+#### Example Response
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "_id": "60a1b2c3d4e5f6g7h8i9j0k1",
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+
+
+### Error Responses
+
+1.
+Invalid Input
+{
+  "errors": [
+    {
+      "msg": "Please enter a valid email",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+2.
+Invalid Credentials
+Code: 401 UNAUTHORIZED
+{
+  "message": "Invalid credentials"
+}
+
+3.
+Authentication Failure
+Code: 500 INTERNAL SERVER ERROR
+{
+  "message": "Failed to authenticate user"
+}
