@@ -6,7 +6,8 @@ configDotenv(); // Load environment variables from .env
 import connectToDB from "./db/db.js";
 connectToDB(); // Connect to the database
 
-import router from "./routes/user.routes.js";
+import userRoutes from "./routes/captain.routes.js";
+import captainRoutes from "./routes/captain.routes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 // User routes
-app.use("/users", router);
+app.use("/users", userRoutes);
+app.use("/captain", captainRoutes);
 
 export default app;

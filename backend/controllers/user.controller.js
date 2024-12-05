@@ -1,5 +1,5 @@
 import userModel from "../models/user.model.js";
-import { createUser } from "../services/user.services.js";
+import { createUser } from "../services/user.service.js";
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 import blackListTokenModel from "../models/blackListToken.model.js";
@@ -11,6 +11,13 @@ export const registerUser = async (req, res, next) => {
   }
 
   const { fullname, email, password } = req.body;
+  // see if its already registered email
+
+  const existingUser = await userModel.findOne({ email });
+
+  if (existingUser) {
+    return res.status(400).json({ message: "Email already registered" });
+  }
 
   const hashedPassword = await userModel.hashPassword(password);
 
