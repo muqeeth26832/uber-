@@ -6,14 +6,14 @@ configDotenv(); // Load environment variables from .env
 import connectToDB from "./db/db.js";
 connectToDB(); // Connect to the database
 
-import userRoutes from "./routes/captain.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import captainRoutes from "./routes/captain.routes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
 
 // Enable CORS
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
